@@ -1,0 +1,17 @@
+#! /usr/bin/env node
+const fse = require("fs-extra");
+const path = require("path");
+const chalk = require("chalk");
+
+
+const projectPath = path.join(process.cwd());
+const templatePath = path.resolve(__dirname, '../template');
+let filesToCopy = [];
+const files = fse.readdirSync(templatePath);
+files.forEach((file) => {
+    filesToCopy.push(file);
+});
+filesToCopy.forEach((file) => {
+    fse.copySync(path.join(templatePath, file), path.join(projectPath, file));
+    console.log(`${chalk.green("✔ ")}${chalk.grey(`创建: ${file}`)}`);
+});
